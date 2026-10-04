@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { apiRequest } from "../api/client";
 
-function Login() {
+function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -8,46 +9,33 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
+    
 
-        try {
-            const res = await fetch("http://localhost:5500/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password })
-            });
+    try {
+        const data = await apiRequest("/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+        });
 
-            const data = await res.json();
+        localStorage.setItem("token", data.token);
+        console.log("Logged in! Token saved.");
 
-            if(!data.success){
-                setError(data.message);
-                return;
-            }
-            
-            localStorage.setItem("token", data.token);
-            console.log("Logged in! Token saved.");
-
-        }catch(err){
-            setError("Something went wrong");
-        }
-    };
+    } catch (err) {
+        setError(err.message);
+    }
+}; 
 
     return (
         <form onSubmit={handleSubmit}>
             <div>
                 <label>Email</label>
-                <input 
-                   type="email"
-                   value={email}
-                   onChange={(e) => setEmail(e.target.value)}
-                />
+                <input type="email" value={email}
+                onChange={(e) => setEmail(e.target.value)}/>
             </div>
             <div>
                 <label>Password</label>
-                <input 
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                <input type="password" value={password}
+                onChange={(e) => setPassword(e.target.value)} />
             </div>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <button type="submit">Login</button>
