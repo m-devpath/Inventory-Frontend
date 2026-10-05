@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { apiRequest } from "../api/client";
+import { useNavigate } from "react-router-dom";
 
 function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
-    
 
     try {
         const data = await apiRequest("/auth/login", {
@@ -20,6 +21,8 @@ function Login(){
         localStorage.setItem("token", data.token);
         console.log("Logged in! Token saved.");
 
+        navigate("/dashboard");
+        
     } catch (err) {
         setError(err.message);
     }
