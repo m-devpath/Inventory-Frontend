@@ -1,27 +1,16 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
-import { apiRequest } from "./api/client";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    apiRequest("/categories")
-      .then((data) => setCategories(data.data))
-      .catch((err) => console.log(err.message));
-  }, []);
 
   return (
-    <div>
-      <Login />
-      <hr />
-      <h1>Categories</h1>
-      <ul>
-        {categories.map((category) => (
-          <li key={category.id}>{category.name}</li>
-        ))}
-      </ul>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
