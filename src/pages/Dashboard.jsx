@@ -1,13 +1,20 @@
 import { useState, useEffect } from "react";
 import { apiRequest } from "../api/client";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
     const [categories, setCategories] = useState([]);
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        localStorage.removeItem("token");
+        navigate("/login");
+    }
 
     useEffect(() => {
         apiRequest("/categories")
         .then((data) => setCategories(data.data))
-        .then((err) => console.log(err.message));
+        .catch((err) => console.log(err.message));
     }, []);
 
     return (
@@ -18,7 +25,9 @@ function Dashboard() {
                     <li key={category.id}>{category.name}</li>
                 ))}
             </ul>
+            <button onClick={handleLogout}>Logout</button>
         </div>
+        
     );
 }
 
