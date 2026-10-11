@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Dashboard() {
     const [categories, setCategories] = useState([]);
     const [name, setName] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -14,6 +15,7 @@ function Dashboard() {
     
     const handleAdd = async (e) => {
         e.preventDefault();
+        setError("");
         
         try {
             const result = await apiRequest("/categories", {
@@ -22,8 +24,9 @@ function Dashboard() {
             });
             setName("");
             setCategories([...categories, result.data]);
+            
         } catch (err) {
-            console.log(err.message)
+            setError(err.message)
         }
     
     }
@@ -49,6 +52,7 @@ function Dashboard() {
                 />
                 <button type="submit">Add</button>
             </form>
+            {error && <p style={{ color: "red" }}>{error}</p>}
             <button onClick={handleLogout}>Logout</button>
         </div>
         
