@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { apiRequest } from "../api/client";
+import { Link } from "react-router-dom";
 
 function Products() {
     const [products, setProducts] = useState([]);
@@ -63,6 +64,7 @@ function Products() {
                 <button type="submit">Add</button>
             </form>
             {error && <p style={{ color: "red" }}>{error}</p>}
+            <Link to="/dashboard">Dashboard</Link>
         </div>
     )
 }

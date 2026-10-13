@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { apiRequest } from "../api/client";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
     const [categories, setCategories] = useState([]);
@@ -54,6 +55,7 @@ function Dashboard() {
             </form>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <button onClick={handleLogout}>Logout</button>
+            <Link to="/products">Products</Link>
         </div>
         
     );
