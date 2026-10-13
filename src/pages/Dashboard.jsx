@@ -32,6 +32,25 @@ function Dashboard() {
     
     }
 
+    const handleDelete = async (id) => {
+        setError("");
+
+        
+        try {
+            await apiRequest(`/categories/${id}`, 
+                {method: "DELETE"}
+            );
+            setCategories(categories.filter((category) => 
+                category.id !== id
+            ));
+
+
+        } catch (err) {
+            setError(err.message);
+        }
+      
+    }
+
     useEffect(() => {
         apiRequest("/categories")
         .then((data) => setCategories(data.data))
@@ -43,7 +62,9 @@ function Dashboard() {
             <h1>Categories</h1>
             <ul>
                 {categories.map((category) => (
-                    <li key={category.id}>{category.name}</li>
+                    <li key={category.id}>{category.name}
+                    <button onClick={() => handleDelete(category.id)}>Delete</button>
+                    </li>
                 ))}
             </ul>
             <form onSubmit={handleAdd}>
