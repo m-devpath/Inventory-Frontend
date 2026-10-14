@@ -32,6 +32,19 @@ function Products() {
         }
     }
 
+    const handleDelete = async (id) => {
+        setError("");
+
+        try {
+            await apiRequest(`/products/${id}`, {method: "DELETE"});
+           
+            setProducts(products.filter((product) =>  product.id !== id ));
+
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
     useEffect(() => {
         apiRequest('/products')
         .then((data) => setProducts(data.data))
@@ -45,6 +58,7 @@ function Products() {
                 {products.map((product) => (
                     <li key={product.id}>
                         {product.name} - ${product.price} - Qty: {product.quantity}
+                        <button onClick={() => handleDelete(product.id)}>Delete</button>
                     </li>
                 ))}
             </ul>
