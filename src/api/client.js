@@ -12,6 +12,13 @@ export async function apiRequest(endpoint, options = {}) {
         },
     });
 
+    const isAuthRequest = endpoint.startsWith("/auth");
+
+    if(res.status === 401 && !isAuthRequest) {
+        localStorage.removeItem("token");
+        window.location.href = '/login';
+    }
+
     const data = await res.json();
 
     if(!data.data){

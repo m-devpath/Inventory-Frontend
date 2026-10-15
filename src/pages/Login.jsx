@@ -19,8 +19,6 @@ function Login(){
         });
 
         localStorage.setItem("token", data.token);
-        console.log("Logged in! Token saved.");
-
         navigate("/dashboard");
         
     } catch (err) {
