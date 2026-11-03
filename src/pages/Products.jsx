@@ -8,6 +8,12 @@ function Products() {
     const [price, setPrice] = useState("");
     const [quantity, setQuantity] = useState("");
     const [error, setError] = useState("");
+    const [editingId, setEditingId] = useState(null);
+    const [editName, setEditName] = useState("");
+    const [editPrice, setEditPrice] = useState("");
+    const [editQuantity, setEditQuantity] = useState("");
+    
+
    
     const handleAdd = async (e) => {
         e.preventDefault();
@@ -45,6 +51,27 @@ function Products() {
         }
     }
 
+    const handleSave = async (id) => {
+        setError("");
+
+        try {
+            const result = await apiRequest(`/products/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    name: editName,
+                    price: Number(editPrice),
+                    quantity: Number(editQuantity)
+                }),
+            });
+            
+            setProducts(products.map((p) => p.id === id ? result.data : p));
+            setEditingId(null)
+
+        } catch (err) {
+            setError(err.message);
+        }
+    }
+
     useEffect(() => {
         apiRequest('/products')
         .then((data) => setProducts(data.data))
@@ -55,13 +82,33 @@ function Products() {
         <div>
             <h1>Products</h1>
             <ul>
-                {products.map((product) => (
-                    <li key={product.id}>
-                        {product.name} - ${product.price} - Qty: {product.quantity}
+                {products.map((product) => 
+                <li key={product.id}>
+                    {editingId === product.id ? (
+                        <span>
+                            <input type= "text" value={editName} onChange= {(e) => setEditName(e.target.value)} />
+                            <input type= "number" value={editPrice} onChange= {(e) => setEditPrice(e.target.value)} />
+                            <input type= "number" value={editQuantity} onChange= {(e) => setEditQuantity(e.target.value)} />
+
+                            <button onClick={() => handleSave(product.id)}>Save</button>
+                        </span>
+                    ):(
+                        <span>
+                            {product.name} - ${product.price} - Qty: {product.quantity}
+                            <button onClick={() => {
+                                setEditingId(product.id);
+                                setEditName(product.name);
+                                setEditPrice(product.price);
+                                setEditQuantity(product.quantity);
+                            }}>
+                                Edit
+                            </button>
+                            
+                        </span>
+                    )}
                         <button onClick={() => handleDelete(product.id)}>Delete</button>
-                    </li>
-                ))}
-            </ul>
+                        </li>
+                 )} </ul>
             <form onSubmit={handleAdd}>
                 <input type="text" value={name} 
                     onChange={(e) => setName(e.target.value)}
