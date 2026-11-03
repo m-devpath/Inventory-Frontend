@@ -58,7 +58,7 @@ function Products() {
             setError('Quantity is required');
             return;
         }
-        
+
         try {
             const result = await apiRequest(`/products/${id}`, {
                 method: 'PUT',
@@ -84,35 +84,37 @@ function Products() {
     }, []);
 
     return (
-        <div>
+        <div className="container">
             <h1>Products</h1>
             <ul>
                 {products.map((product) => 
                 <li key={product.id}>
                     {editingId === product.id ? (
+                        <>
                         <span>
                             <input type= "text" value={editName} onChange= {(e) => setEditName(e.target.value)} />
                             <input type= "number" value={editPrice} onChange= {(e) => setEditPrice(e.target.value)} />
                             <input type= "number" value={editQuantity} onChange= {(e) => setEditQuantity(e.target.value)} />
-
+                        </span>
+                        <div className="actions">
                             <button onClick={() => handleSave(product.id)}>Save</button>
                             <button onClick={() => setEditingId(null)}>Cancel</button>
-                        </span>
+                            </div>
+                        </>
                     ):(
-                        <span>
-                            {product.name} - ${product.price} - Qty: {product.quantity}
+                        <>
+                        <span>{product.name} - ${product.price} - Qty: {product.quantity}</span>
+                            <div className="actions">
                             <button onClick={() => {
                                 setEditingId(product.id);
                                 setEditName(product.name);
                                 setEditPrice(product.price);
                                 setEditQuantity(product.quantity);
-                            }}>
-                                Edit
-                            </button>
-                            
-                        </span>
+                            }}>Edit</button>
+                            <button onClick={() => handleDelete(product.id)}>Delete</button>
+                        </div>
+                        </>
                     )}
-                        <button onClick={() => handleDelete(product.id)}>Delete</button>
                         </li>
                  )} </ul>
             <form onSubmit={handleAdd}>

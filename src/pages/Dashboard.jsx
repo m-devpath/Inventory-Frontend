@@ -77,28 +77,34 @@ function Dashboard() {
     }, []);
 
     return (
-        <div>
+        <div className="container">
             <h1>Categories</h1>
             <ul>
                 {categories.map((category) => (
                     <li key={category.id}>
                         {editingId === category.id ? (
+                            <>
                             <span>
                                 <input value={editName} onChange={(e) => setEditName(e.target.value)} />
-                                <button onClick={() => handleSave(category.id)}>Save</button>
                             </span>
+                            <div className="actions">
+                                <button onClick={() => handleSave(category.id)}>Save</button>
+                                <button onClick={() => setEditingId(null)}>Cancel</button>
+
+                            </div>
+                            </>
                             ) : (
-                            <span>
-                                {category.name}
+                                <>
+                               <span>{category.name}</span> 
+                               <div className="actions">
                                 <button onClick={() => {
                                 setEditingId(category.id);
                                 setEditName(category.name);
-                                }}>
-                                Edit
-                                </button>
-                            </span>
+                                }}>Edit</button>
+                                <button onClick={() => handleDelete(category.id)}>Delete</button>
+                            </div>
+                            </>
                             )}
-                        <button onClick={() => handleDelete(category.id)}>Delete</button>
                     </li>
                 ))}
             </ul>
