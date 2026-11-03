@@ -54,6 +54,11 @@ function Products() {
     const handleSave = async (id) => {
         setError("");
 
+        if(editQuantity === ""){
+            setError('Quantity is required');
+            return;
+        }
+        
         try {
             const result = await apiRequest(`/products/${id}`, {
                 method: 'PUT',
@@ -91,6 +96,7 @@ function Products() {
                             <input type= "number" value={editQuantity} onChange= {(e) => setEditQuantity(e.target.value)} />
 
                             <button onClick={() => handleSave(product.id)}>Save</button>
+                            <button onClick={() => setEditingId(null)}>Cancel</button>
                         </span>
                     ):(
                         <span>
