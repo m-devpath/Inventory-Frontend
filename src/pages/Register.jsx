@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { apiRequest } from "../api/client";
 
 function Register(){
@@ -29,7 +29,9 @@ function Register(){
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div className="auth-card">
+            <h1>Register</h1>
+             <form onSubmit={handleSubmit}>
             <div>
                 <label>Name</label>
                 <input type="text" value={name}
@@ -47,8 +49,11 @@ function Register(){
             </div>
             {error && <p className="error">{error}</p>}
             <button type="submit">Register</button>
-        
         </form>
+        <p className="auth-link">
+        <Link to='/login'>Login</Link>
+        </p>
+        </div>
     );
 };
 

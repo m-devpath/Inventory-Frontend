@@ -90,3 +90,30 @@ a {
   display: flex;
   align-items: center;
 }
+
+.auth-card {
+  max-width: 360px;
+  margin: 80px auto;
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.auth-card form div {
+  margin-bottom: 12px;
+}
+
+.auth-card label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.auth-card input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth-link {
+  margin-top: 16px;
+  text-align: center;
+}
