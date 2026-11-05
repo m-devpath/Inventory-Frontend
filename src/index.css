@@ -70,3 +70,23 @@ input {
   display: flex;
   gap: 8px;
 }
+
+form {
+  margin-top: 16px;
+}
+
+a {
+  color: #2563eb;
+  margin-right: 12px;
+}
+
+.error {
+  color: #dc2626;
+  margin-top: 8px;
+}
+
+.nav {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}

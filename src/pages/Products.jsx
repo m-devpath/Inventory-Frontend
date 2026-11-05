@@ -132,7 +132,7 @@ function Products() {
                 />
                 <button className="primary" type="submit">Add</button>
             </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error">{error}</p>}
             <Link to="/dashboard">Dashboard</Link>
         </div>
     )

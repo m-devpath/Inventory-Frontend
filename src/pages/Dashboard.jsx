@@ -114,9 +114,13 @@ function Dashboard() {
                 />
                 <button className="primary" type="submit">Add</button>
             </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <button onClick={handleLogout}>Logout</button>
-            <Link to="/products">Products</Link>
+            {error && <p className="error">{error}</p>}
+
+            <div className="nav">
+                <Link to="/products">Products</Link>
+                <button onClick={handleLogout}>Logout</button>
+            </div>
+
         </div>
         
     );
