@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { apiRequest } from "../api/client";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Dashboard() {
     const [categories, setCategories] = useState([]);
@@ -88,7 +87,7 @@ function Dashboard() {
                                 <input value={editName} onChange={(e) => setEditName(e.target.value)} />
                             </span>
                             <div className="actions">
-                                <button onClick={() => handleSave(category.id)}>Save</button>
+                                <button className="primary" onClick={() => handleSave(category.id)}>Save</button>
                                 <button onClick={() => setEditingId(null)}>Cancel</button>
 
                             </div>
@@ -101,7 +100,7 @@ function Dashboard() {
                                 setEditingId(category.id);
                                 setEditName(category.name);
                                 }}>Edit</button>
-                                <button onClick={() => handleDelete(category.id)}>Delete</button>
+                                <button className="danger" onClick={() => handleDelete(category.id)}>Delete</button>
                             </div>
                             </>
                             )}
@@ -113,7 +112,7 @@ function Dashboard() {
                  onChange={(e) => setName(e.target.value)}
                  placeholder="New category"
                 />
-                <button type="submit">Add</button>
+                <button className="primary" type="submit">Add</button>
             </form>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <button onClick={handleLogout}>Logout</button>

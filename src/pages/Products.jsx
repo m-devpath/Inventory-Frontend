@@ -97,7 +97,7 @@ function Products() {
                             <input type= "number" value={editQuantity} onChange= {(e) => setEditQuantity(e.target.value)} />
                         </span>
                         <div className="actions">
-                            <button onClick={() => handleSave(product.id)}>Save</button>
+                            <button className="primary" onClick={() => handleSave(product.id)}>Save</button>
                             <button onClick={() => setEditingId(null)}>Cancel</button>
                             </div>
                         </>
@@ -111,7 +111,7 @@ function Products() {
                                 setEditPrice(product.price);
                                 setEditQuantity(product.quantity);
                             }}>Edit</button>
-                            <button onClick={() => handleDelete(product.id)}>Delete</button>
+                            <button className="danger" onClick={() => handleDelete(product.id)}>Delete</button>
                         </div>
                         </>
                     )}
@@ -130,7 +130,7 @@ function Products() {
                     onChange={(e) => setQuantity(e.target.value)}
                     placeholder="Quantity"
                 />
-                <button type="submit">Add</button>
+                <button className="primary" type="submit">Add</button>
             </form>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <Link to="/dashboard">Dashboard</Link>
